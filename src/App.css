@@ -28,87 +28,122 @@
 
 .fruit-card {
   flex: 0 1 auto;
-  text-align: center;
   position: relative;
-  transition: all 0.3s ease;
+  width: min(360px, calc(100vw - 48px));
+  height: 280px;
+  perspective: 1400px;
+  cursor: pointer;
+  outline: none;
 }
 
-.fruit-card.hovered img {
-  transform: scale(1.2);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+.fruit-card:focus-visible .fruit-card-inner {
+  box-shadow: 0 0 0 3px rgba(170, 59, 255, 0.35), 0 18px 40px rgba(0, 0, 0, 0.18);
 }
 
-.fruit-card.expanded {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 1000;
-  background: white;
-  padding: 40px;
-  border-radius: 12px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-  animation: zoomIn 0.5s ease-out;
-  min-width: 400px;
-  max-width: 500px;
+.fruit-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 24px;
+  transform-style: preserve-3d;
+  transition: transform 0.8s cubic-bezier(0.2, 0.75, 0.2, 1),
+    box-shadow 0.3s ease;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+}
+
+.fruit-card.hovered .fruit-card-inner {
+  box-shadow: 0 18px 42px rgba(0, 0, 0, 0.18);
+  transform: translateY(-2px);
+}
+
+.fruit-card.flipped .fruit-card-inner {
+  transform: rotateY(180deg);
+}
+
+.fruit-card-face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border-radius: 24px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  padding: 24px;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
-.fruit-card.expanded img {
-  max-width: 300px;
-  height: auto;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  margin-bottom: 20px;
+.fruit-card-front {
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.92), rgba(245, 241, 255, 0.95));
 }
 
-@keyframes zoomIn {
-  from {
-    transform: translate(-50%, -50%) scale(0.8);
-    opacity: 0;
-  }
-  to {
-    transform: translate(-50%, -50%) scale(1);
-    opacity: 1;
-  }
+.fruit-card-front img {
+  width: 170px;
+  height: 170px;
+  object-fit: cover;
+  border-radius: 22px;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.14);
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
 }
 
-.fruit-card img {
-  max-width: 150px;
-  height: auto;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+.fruit-card.hovered .fruit-card-front img {
+  transform: scale(1.04);
 }
 
-.fruit-card img:hover {
-  transform: scale(1.05);
+.fruit-card-back {
+  transform: rotateY(180deg);
+  background:
+    radial-gradient(circle at top, rgba(255, 255, 255, 0.24), transparent 42%),
+    linear-gradient(160deg, rgba(170, 59, 255, 0.96), rgba(76, 29, 149, 0.96));
+  color: white;
+  gap: 14px;
+}
+
+.fruit-card-back::before {
+  content: '';
+  position: absolute;
+  inset: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 18px;
+  pointer-events: none;
+}
+
+.fruit-name,
+.fruit-back-label {
+  margin: 0;
+  font-weight: 700;
+  letter-spacing: 0.02em;
 }
 
 .fruit-name {
-  margin-top: 10px;
-  font-weight: bold;
-  color: var(--accent, #333);
+  margin-top: 14px;
+  color: #24162f;
+  font-size: 20px;
+}
+
+.fruit-prompt {
+  margin-top: 8px;
+  font-size: 13px;
+  color: #7d7390;
+}
+
+.fruit-back-label {
+  font-size: 24px;
 }
 
 .fruit-description {
-  margin-top: 20px;
-  font-size: 16px;
-  line-height: 1.5;
-  color: #555;
-  max-width: 300px;
-  animation: fadeIn 0.4s ease-out;
+  margin-top: 0;
+  font-size: 18px;
+  line-height: 1.6;
+  max-width: 24ch;
+  color: rgba(255, 255, 255, 0.92);
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+.fruit-card-face > * {
+  position: relative;
+  z-index: 1;
 }
 
 .counter {
@@ -293,5 +328,33 @@
   &::after {
     right: 0;
     border-right-color: var(--border);
+  }
+}
+
+@media (max-width: 640px) {
+  .fruit-container {
+    padding-inline: 12px;
+  }
+
+  .fruit-row {
+    padding-top: 28px;
+    padding-bottom: 28px;
+  }
+
+  .fruit-card {
+    height: 250px;
+  }
+
+  .fruit-card-front img {
+    width: 140px;
+    height: 140px;
+  }
+
+  .fruit-name {
+    font-size: 18px;
+  }
+
+  .fruit-description {
+    font-size: 16px;
   }
 }

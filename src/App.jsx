@@ -1,12 +1,11 @@
-import { useState, useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import './App.css'
 
 function App() {
   const [scrolledFruit, setScrolledFruit] = useState(null)
-  const [expandedFruit, setExpandedFruit] = useState(null)
+  const [flippedFruit, setFlippedFruit] = useState(null)
   const containerRef = useRef(null)
   const cardRefs = useRef({})
-  const timerRef = useRef(null)
 
   const fruits = [
     { 
@@ -42,7 +41,7 @@ function App() {
   ]
 
   useEffect(() => {
-    const handleWheel = (e) => {
+    const handleWheel = () => {
       // Find which fruit card is closest to the center of the viewport
       let closestFruit = null
       let closestDistance = Infinity
@@ -65,54 +64,55 @@ function App() {
 
       if (closestFruit) {
         setScrolledFruit(closestFruit)
-        setExpandedFruit(null)
-
-        // Clear existing timer
-        if (timerRef.current) {
-          clearTimeout(timerRef.current)
-        }
-
-        // Set new timer for expansion after 3 seconds
-        timerRef.current = setTimeout(() => {
-          setExpandedFruit(closestFruit)
-        }, 3000)
       }
     }
 
-    const handleCloseExpanded = (e) => {
-      if (expandedFruit && e.key === 'Escape') {
-        setExpandedFruit(null)
-      }
+    let flipTimeoutId = null
+
+    if (scrolledFruit) {
+      flipTimeoutId = window.setTimeout(() => {
+        setFlippedFruit(scrolledFruit)
+      }, 3000)
+    } else {
+      setFlippedFruit(null)
+    }
+
+    if (flippedFruit && flippedFruit !== scrolledFruit) {
+      setFlippedFruit(null)
     }
 
     window.addEventListener('wheel', handleWheel)
-    window.addEventListener('keydown', handleCloseExpanded)
 
     return () => {
-      window.removeEventListener('wheel', handleWheel)
-      window.removeEventListener('keydown', handleCloseExpanded)
-      if (timerRef.current) {
-        clearTimeout(timerRef.current)
+      if (flipTimeoutId) {
+        window.clearTimeout(flipTimeoutId)
       }
+      window.removeEventListener('wheel', handleWheel)
     }
-  }, [fruits])
+  }, [fruits, scrolledFruit, flippedFruit])
 
   return (
     <div className="fruit-container" ref={containerRef}>
       <h1>Fruit Gallery</h1>
-      <p className="scroll-hint">Scroll to highlight fruits</p>
+      <p className="scroll-hint">Scroll to highlight a fruit, then wait 3 seconds for the card to flip</p>
       <div className="fruit-row">
         {fruits.map((fruit) => (
           <div 
             key={fruit.name} 
             ref={(el) => cardRefs.current[fruit.name] = el}
-            className={`fruit-card ${scrolledFruit === fruit.name ? 'hovered' : ''} ${expandedFruit === fruit.name ? 'expanded' : ''}`}
+            className={`fruit-card ${scrolledFruit === fruit.name ? 'hovered' : ''} ${flippedFruit === fruit.name ? 'flipped' : ''}`}
           >
-            <img src={fruit.image} alt={fruit.name} />
-            <p className="fruit-name">{fruit.name}</p>
-            {expandedFruit === fruit.name && (
-              <p className="fruit-description">{fruit.description}</p>
-            )}
+            <div className="fruit-card-inner">
+              <div className="fruit-card-face fruit-card-front">
+                <img src={fruit.image} alt={fruit.name} />
+                <p className="fruit-name">{fruit.name}</p>
+                <p className="fruit-prompt">Wait 3 seconds</p>
+              </div>
+              <div className="fruit-card-face fruit-card-back">
+                <p className="fruit-back-label">{fruit.name}</p>
+                <p className="fruit-description">{fruit.description}</p>
+              </div>
+            </div>
           </div>
         ))}
       </div>
