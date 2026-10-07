@@ -18,7 +18,7 @@ html, body, #root {
 
 .Picasso-timeline-container h1 {
   margin-bottom: 30px;
-  color: var(#ffffff);
+  color: white;
   letter-spacing: 0.1em;
   font-family: "skolar-sans-latin", sans-serif;
   font-weight: 900;
