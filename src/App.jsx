@@ -259,7 +259,7 @@ function App() {
   const targetScrollLeftRef = useRef(0)
   const wheelAnimationFrameRef = useRef(null)
   const scrollTimeoutRef = useRef(null)
-  const scrollAnimationTimer = 2000
+  const scrollAnimationTimer = 1500
 
   useEffect(() => {
     const row = rowRef.current
