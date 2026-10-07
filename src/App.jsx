@@ -39,13 +39,13 @@ const PicassoCard = [
   {
     name: 'Divider 1909',
     year: 1909,
-    description: 'Inception of Cubism ',
+    description: '1909: Inception of Cubism ',
     color: '#f3e9e3',
   },
   {
     name: 'Divider 1914',
     year: 1914,
-    description: 'World War I Begins',
+    description: '1914: World War I Begins',
     color: '#f3e9e3', 
   },
   {
@@ -65,7 +65,7 @@ const PicassoCard = [
   {
     name: 'Divider 1925',
     year: 1925,
-    description: "Inception of Surrealism ",
+    description: "1925: Inception of Surrealism ",
     color: '#f3e9e3',
   },
   {
@@ -79,7 +79,7 @@ const PicassoCard = [
   {
     name: 'Divider 1936',
     year: 1936,
-    description: "Spanish Civil War Begins",
+    description: "1936: Spanish Civil War Begins",
     color: '#f3e9e3', 
   },
   {
@@ -99,7 +99,7 @@ const PicassoCard = [
   {
     name: 'Divider 1939',
     year: 1939,
-    description: "World War II Begins",
+    description: "1939: World War II Begins",
     color: '#f3e9e3',
   },
   {
