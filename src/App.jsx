@@ -22,7 +22,7 @@ const PicassoCard = [
   },
   {
     name: '1901',
-    image: '/PicassoImage/1901GeneralKeyWork.png',
+    image: 'PicassoImage/1901GeneralKeyWork.png',
     year: 1901,
     description: "Enters his Blue Period. For three years, he creates largely monochromatic blue paintings of somber subject matter. Followed by his Rose period in 1904. ",
     credit: <>Pablo Picasso (Spanish, 1881–1973), <i>Seated Harlequin</i>, 1901 © 2026 Estate of Pablo Picasso / Artists Rights Society (ARS), New York</>,
@@ -30,7 +30,7 @@ const PicassoCard = [
   },
   {
     name: '1907',
-    image: '/PicassoImage/1907GeneralKeyWork.png',
+    image: 'PicassoImage/1907GeneralKeyWork.png',
     year: 1907,
     description: "Begins to incorporate elements of global ethnographic art into paintings such as Les Demoiselles d’Avignon (The Young Ladies of Avignon). ",
     credit: <>Pablo Picasso (Spanish, 1881–1973), <i>Les Demoiselles d’Avignon (The Young Ladies of Avignon)</i>, 1907 © 2026 Estate of Pablo Picasso / Artists Rights Society (ARS), New York</>,
@@ -50,7 +50,7 @@ const PicassoCard = [
   },
   {
     name: '1918 ',
-    image: '/PicassoImage/ART564772_Updated.jpg',
+    image: 'PicassoImage/ART564772_Updated.jpg',
     year: 1918,
     description: "Following le rappel à l’ordre (the return to order) in Europe, adopts Neoclassicism and blends the style with Cubism. ",
     credit: <>Pablo Picasso (Spanish, 1881–1973), <i>La Flûte de Pan (The Pipes of Pan)</i>, 1923 © 2026 Estate of Pablo Picasso / Artists Rights Society (ARS), New York</>,
@@ -70,7 +70,7 @@ const PicassoCard = [
   },
   {
     name: '1929',
-    image: '/PicassoImage/1929Ceramic.jpg',
+    image: 'PicassoImage/1929Ceramic.jpg',
     year: 1929,
     description: "Paints two ceramic vases with the assistance of Dutch artist Jean van Dongen. ",
     credit: <>Pablo Picasso (Spanish, 1881–1973) and Jean van Dongen (Dutch, 1883–1970), <i>Vase décoré de baigneuses (Vase with Bathers)</i>, 1929 © 2026 Estate of Pablo Picasso / Artists Rights Society (ARS), New York</>,
@@ -90,7 +90,7 @@ const PicassoCard = [
   },
   {
     name: '1937',
-    image: '/PicassoImage/Guernica.jpeg',
+    image: 'PicassoImage/Guernica.jpeg',
     year: 1937,
     description: "Paints Guernica for the Spanish pavilion at the Exposition Internationale des Arts et Techniques dans la Vie Moderne (International Exposition of Art and Technology in Modern Life) in Paris. ",
     credit: <>Pablo Picasso (Spanish, 1881–1973), <i>Guernica</i>, 1937 © 2026 Estate of Pablo Picasso / Artists Rights Society (ARS), New York</>,
@@ -116,7 +116,7 @@ const PicassoCard = [
   },
   {
     name: '1947',
-    image: '/PicassoImage/AR_Face_Plate.jpg',
+    image: 'PicassoImage/AR_Face_Plate.jpg',
     year: 1947,
     description: "Begins his ongoing work on ceramics in Vallauris at the Ramiés’ Madoura workshop. ",
     credit: <>Pablo Picasso (Spanish, 1881–1973), <i>Brown/Blue Face</i>, 1947 © 2026 Estate of Pablo Picasso / Artists Rights Society (ARS), New York</>,
@@ -130,7 +130,7 @@ const PicassoCard = [
   },
   {
     name: '1949',
-    image: '/PicassoImage/AR_Blue_Plate.jpg',
+    image: 'PicassoImage/AR_Blue_Plate.jpg',
     year: 1949,
     description: "Picasso suggests to the Ramiés that they produce prints of his ceramics, leading to the first edition, Four Enlaced Profiles. ",
     credit: <>Pablo Picasso (Spanish, 1881–1973), <i>Four Enlaced Profiles</i>, 1949 © 2026 Estate of Pablo Picasso / Artists Rights Society (ARS), New York</>,
@@ -151,7 +151,7 @@ const PicassoCard = [
   },
   {
     name: '1963',
-    image: '/PicassoImage/AR_Front_Face.jpg',
+    image: 'PicassoImage/AR_Front_Face.jpg',
     year: 1963,
     description: "At Madoura, produces a remarkable series of 204 ceramic dishes painted in enamel, demonstrating his continued experimentation with serial production and painted surface decoration. ",
     credit: <>Pablo Picasso (Spanish, 1881–1973), <i>Face nº 202</i>, 1963 © 2026 Estate of Pablo Picasso / Artists Rights Society (ARS), New York</>,
@@ -159,7 +159,7 @@ const PicassoCard = [
   },
   {
     name: '1968',
-    image: '/PicassoImage/AR_BlackOrange_Paint.jpg',
+    image: 'PicassoImage/AR_BlackOrange_Paint.jpg',
     year: 1968,
     description: "Using his reduction linocut blockss, produces prints on paper and ceramic. ",
     credit: <>Pablo Picasso (Spanish, 1881–1973), <i>Figures and Cavalier</i>, 1968 © 2026 Estate of Pablo Picasso / Artists Rights Society (ARS), New York</>,
@@ -167,7 +167,7 @@ const PicassoCard = [
   },
   {
     name: '1970',
-    image: '/PicassoImage/T06.jpg',
+    image: 'PicassoImage/T06.jpg',
     year: 1970,
     description: "The Papal Palace in Avignon hosts the first of two landmark exhibitions of Picasso’s works, the second opening months after his passing. ",
     credit: <>Pablo Picasso (Spanish, 1881–1973), <i>L’Étreinte (The Embrace)</i>, 1969 © 2026 Estate of Pablo Picasso / Artists Rights Society (ARS), New York</>,
