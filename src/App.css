@@ -1,149 +1,375 @@
-.fruit-container {
-  padding: 20px;
-  text-align: center;
-  min-height: 100vh;
+
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-x: hidden; 
 }
 
-.fruit-container h1 {
-  margin-bottom: 10px;
-  color: var(--accent, #000);
+.fruit-container {
+  margin: 100px;
+  min-height: 100svh;
+  padding: 14px 0 14px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
+
+.Picasso-timeline-container h1 {
+  margin-bottom: 30px;
+  color: var(#ffffff);
+  letter-spacing: 0.1em;
+  font-family: "skolar-sans-latin", sans-serif;
+  font-weight: 900;
+  font-style: normal;
+}
+
 
 .scroll-hint {
-  color: #999;
-  font-size: 14px;
-  margin-bottom: 40px;
-  font-style: italic;
+  margin-bottom: 12px;
+  color: #f3e9e3;
+  font-size: 18px;
+  margin-bottom: 12px;
+  font-style: normal;
+   font-family: "skolar-sans-latin", sans-serif;
+  font-weight: 500;
+}
+
+.timeline-shell {
+  margin-top: 30px;
+  /*position: sticky;*/
+  top: 0;
+  z-index: 5;
+  width: 100%;
+  padding: 4px 0 20px;
+  background: transparent;
+  backdrop-filter: none;
+}
+
+.timeline-shell::before {
+  content: '';
+  display: none;
 }
 
 .fruit-row {
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  justify-content: center;
+  flex-wrap: nowrap;
+  gap: 5px;
+  align-items: flex-start; 
+  justify-content: center; 
+  width: 100%;
+  flex: 1 1 auto;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 40px 0; 
+  box-sizing: border-box;
+  scrollbar-width: none;
+}
+
+.fruit-track {
+  display: flex;
+  gap: 5px;
+  width: max-content;
+  flex: 0 0 auto;
+  padding: 0 max(20px, calc(50vw - 400px));
+}
+
+.fruit-row::-webkit-scrollbar {
+  display: none;
+  scroll-behavior: smooth;
+}
+
+.timeline-track,
+.fruit-track {
+  display: flex;
+  gap: 5px;
+  width: max-content;
+  flex: 0 0 auto;
+}
+
+.timeline-track {
+  position: relative;
+  align-items: flex-start;
+  width: calc(100% - 120px);
+  margin: 0 auto; 
+  min-height: 68px;
+  padding: 0 26px 20px;
+  box-sizing: border-box;
+   font-family: "skolar-sans-latin", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+}
+
+.timeline-stop {
+  position: relative;
+  color: #8a8391;
+  position: absolute;
+  left: var(--timeline-position, 0%);
+  top: 0;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  padding-top: 50vh;
-  padding-bottom: 50vh;
+  min-width: 0;
+}
+
+.timeline-line,
+.timeline-progress {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 14px;
+  height: 3px;
+}
+
+.timeline-line {
+  background:
+    linear-gradient(90deg, rgba(170, 59, 255, 0.08), rgba(170, 59, 255, 0.18), rgba(170, 59, 255, 0.08)),
+    repeating-linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.50) 0,
+      rgb(255, 255, 255, 0.50) 8px,
+      rgb(255, 255, 255, 0.50) 8px,
+      rgb(255, 255, 255, 0.50) 16px
+    );
+}
+
+.timeline-progress {
+  width: var(--timeline-progress, 0%);
+  background: linear-gradient(90deg, #fbfbfb 0%, #6b7eb8 100%);
+}
+
+.timeline-stop:first-of-type::before,
+.timeline-stop:last-of-type::after {
+  content: '';
+  position: absolute;
+  top: 11px;
+  width: 9px;
+  height: 9px;
+  border-radius: 999px;
+  background: #ffffff;
+  transform: translateY(-3px);
+  box-shadow: 0 0 0 6px rgba(170, 59, 255, 0.1);
+}
+
+.timeline-stop:first-of-type::before {
+  left: 0;
+}
+
+.timeline-stop:last-of-type::after {
+  right: 0;
+}
+
+.timeline-stop:first-of-type {
+  transform: translateX(0);
+}
+
+.timeline-stop:last-of-type {
+  transform: translateX(-100%);
+}
+
+.timeline-marker {
+  width: 14px;
+  height: 14px;
+  border-radius: 999px;
+  box-shadow: 0 0 0 8px rgba(0, 0, 0, 0.06);
+  z-index: 1;
+}
+
+.timeline-checker {
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+  background-color: #f3e9e3;
+  background-size: 8px 8px;
+  background-position: 0 0, 0 4px, 4px -4px, -4px 0;
+}
+
+.timeline-year {
+  margin: 12px 0 0;
+  font-size: 18px;
+  letter-spacing: 0.09em;
+  color: #fafafa;
+   font-family: "skolar-sans-latin", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateY(4px);
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+}
+
+.timeline-stop.active .timeline-checker {
+  background: var(--accent);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 10px rgba(239, 237, 240, 0);
+}
+
+.timeline-stop.active .timeline-year {
+  color: var(--text-h);
+  opacity: 1;
+  transform: translateY(0);
+     font-family: "skolar-sans-latin", sans-serif;
+  font-weight: 500;
+  font-style: normal;
 }
 
 .fruit-card {
-  flex: 0 1 auto;
+  flex: 0 0 auto;
   position: relative;
-  width: min(360px, calc(100vw - 48px));
-  height: 280px;
-  perspective: 1400px;
-  cursor: pointer;
+  width: min(620px, calc(100vw - 28px));
+  min-height: 200px;
+  margin: 0 -30px; 
+  cursor: default;
   outline: none;
+  opacity: var(--card-opacity, 0.62);
+  transform: scale(var(--card-scale, 0.82));
+  transform-origin: center center;
+  transition:
+    transform 0.32s ease,
+    opacity 0.32s ease,
+    filter 0.32s ease;
+  filter: saturate(0.9) brightness(0.94);
+  will-change: transform, opacity;
 }
 
-.fruit-card:focus-visible .fruit-card-inner {
-  box-shadow: 0 0 0 3px rgba(170, 59, 255, 0.35), 0 18px 40px rgba(0, 0, 0, 0.18);
+.fruit-card.active {
+  opacity: 1;
+  filter: saturate(1) brightness(1);
 }
 
 .fruit-card-inner {
   position: relative;
   width: 100%;
   height: 100%;
-  border-radius: 24px;
-  transform-style: preserve-3d;
-  transition: transform 0.8s cubic-bezier(0.2, 0.75, 0.2, 1),
-    box-shadow 0.3s ease;
+  min-height: 176px;
+  border-radius: 28px;
+  display: grid;
+  grid-template-columns: minmax(150px, 220px) 1fr;
+  gap: 5px;
+  align-items: center;
+  padding: 18px;
+  box-sizing: border-box;
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease,
+    border-color 0.3s ease,
+    background-color 0.3s ease; 
 }
 
-.fruit-card.hovered .fruit-card-inner {
+.fruit-card:hover .fruit-card-inner {
   box-shadow: 0 18px 42px rgba(0, 0, 0, 0.18);
   transform: translateY(-2px);
 }
 
-.fruit-card.flipped .fruit-card-inner {
-  transform: rotateY(180deg);
+.fruit-card.active .fruit-card-inner {
+  border: 1px solid rgba(170, 59, 255, 0.14);
 }
 
-.fruit-card-face {
-  position: absolute;
-  inset: 0;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-  border-radius: 24px;
+.fruit-card-image {
+  width: 100%;
+  height: 100%;
+  min-height: 136px;
+  object-fit: contain; 
+  border-radius: 0; 
+  box-shadow: none;
+}
+
+.fruit-card--text-only .fruit-card-inner {
+  grid-template-columns: 1fr;
+  padding-left: 60px; 
+  padding-right: 60px; 
+  max-width: 450px;
+  margin: 0 auto; 
+}
+.fruit-card--text-only .fruit-card-inner {
+  grid-template-columns: 1fr;
+  padding-left: 60px; 
+  padding-right: 60px; 
+}
+
+.fruit-card-copy {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
-  padding: 24px;
-  box-sizing: border-box;
-  overflow: hidden;
-}
-
-.fruit-card-front {
-  background: linear-gradient(160deg, rgba(255, 255, 255, 0.92), rgba(245, 241, 255, 0.95));
-}
-
-.fruit-card-front img {
-  width: 170px;
-  height: 170px;
-  object-fit: cover;
-  border-radius: 22px;
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.14);
-  transition: transform 0.35s ease, box-shadow 0.35s ease;
-}
-
-.fruit-card.hovered .fruit-card-front img {
-  transform: scale(1.04);
-}
-
-.fruit-card-back {
-  transform: rotateY(180deg);
-  background:
-    radial-gradient(circle at top, rgba(255, 255, 255, 0.24), transparent 42%),
-    linear-gradient(160deg, rgba(170, 59, 255, 0.96), rgba(76, 29, 149, 0.96));
-  color: white;
-  gap: 14px;
-}
-
-.fruit-card-back::before {
-  content: '';
-  position: absolute;
-  inset: 16px;
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  border-radius: 18px;
-  pointer-events: none;
-}
-
-.fruit-name,
-.fruit-back-label {
-  margin: 0;
-  font-weight: 700;
-  letter-spacing: 0.02em;
+  text-align: left;
 }
 
 .fruit-name {
-  margin-top: 14px;
   color: #24162f;
-  font-size: 20px;
-}
-
-.fruit-prompt {
-  margin-top: 8px;
-  font-size: 13px;
-  color: #7d7390;
-}
-
-.fruit-back-label {
-  font-size: 24px;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  margin: 0 0 10px;
+  margin-left: 18px;
+     font-family: "skolar-sans-latin", sans-serif;
+  font-weight: 500;
+  font-style: normal;
 }
 
 .fruit-description {
   margin-top: 0;
-  font-size: 18px;
+  margin-left: 20px;
+  font-size: 14px;
   line-height: 1.6;
-  max-width: 24ch;
-  color: rgba(255, 255, 255, 0.92);
+  max-width: 34ch;
+  color: #666;
+  font-style: normal;
+   font-family: "skolar-sans-latin", sans-serif;
+  font-weight: 500;
 }
 
-.fruit-card-face > * {
-  position: relative;
-  z-index: 1;
+/* --- Divider Card Wrapper --- */
+/* Applied conditionally when the card is a divider */
+.fruit-card.is-divider {
+  width: 350px;
+  min-width: 350px;
+  margin: 0 10px;
+  display: flex;
+  align-items: center;
+}
+
+/* --- Divider Box inside the wrapper --- */
+.fruit-divider-box {
+  width: 100%;
+  height: 80px;
+  min-height: 80px;
+  background-color: #1a1a1a;
+  border: 4px solid #000000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+/* --- Text inside the divider box --- */
+.fruit-divider-text {
+  color: #ffffff;
+  font-size: 22px;
+  font-weight: 900;
+  margin: 0;
+  white-space: nowrap;
+   font-family: "skolar-sans-latin", sans-serif;
+  font-weight: 500;
+}
+
+/* --- Fruit Credit text --- */
+.fruit-credit {
+  margin-top: 8px;
+  margin-left: 20px;
+  font-size: 10px;
+  color: #666;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  padding-top: 8px;
+  line-height: 1.2;
+   font-family: "skolar-sans-latin", sans-serif;
+  font-weight: 500;
 }
 
 .counter {
@@ -207,14 +433,14 @@
 #center {
   display: flex;
   flex-direction: column;
-  gap: 25px;
+  gap: 5px;
   place-content: center;
   place-items: center;
   flex-grow: 1;
 
   @media (max-width: 1024px) {
     padding: 32px 20px 24px;
-    gap: 18px;
+    gap: 5px;
   }
 }
 
@@ -331,18 +557,26 @@
   }
 }
 
+/* --- MOBILE STYLES --- */
 @media (max-width: 640px) {
   .fruit-container {
-    padding-inline: 12px;
+    padding: 16px 0 20px;
   }
 
   .fruit-row {
-    padding-top: 28px;
-    padding-bottom: 28px;
+    gap: 5px;
+    padding: 12px calc(50vw - 140px) 24px;
+    scroll-padding-inline: calc(50vw - 140px);
+    
   }
 
   .fruit-card {
     height: 250px;
+    width: min(280px, calc(100vw - 32px));
+    font-style: normal;
+   font-family: "skolar-sans-latin", sans-serif;
+  font-weight: 500;
+
   }
 
   .fruit-card-front img {
@@ -352,9 +586,18 @@
 
   .fruit-name {
     font-size: 18px;
+     font-style: normal;
+   font-family: "skolar-sans-latin", sans-serif;
+  font-weight: 500;
   }
 
   .fruit-description {
     font-size: 16px;
+     font-style: normal;
+   font-family: "skolar-sans-latin", sans-serif;
+  font-weight: 500;
   }
-}
+} 
+
+
+
