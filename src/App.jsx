@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import './App.css'
 
 const PicassoCard = [
@@ -189,6 +189,9 @@ const PicassoCard = [
 
 PicassoCard.sort((a, b) => a.year - b.year)
 
+// DUPLICATE ARRAY 3 TIMES FOR INFINITE LOOPING
+const allCards = [...PicassoCard, ...PicassoCard, ...PicassoCard]
+
 const timelineYears = PicassoCard.map((card, index) => ({
   id: index,
   name: card.name,
@@ -216,14 +219,13 @@ function App() {
   
   const rowRef = useRef(null)
   const cardRefs = useRef({})
-  
-  const startSpacerRef = useRef(null)
-  const endSpacerRef = useRef(null)
 
   const targetScrollLeftRef = useRef(0)
   const wheelAnimationFrameRef = useRef(null)
   const scrollTimeoutRef = useRef(null)
-  const scrollAnimationTimer = 1500
+
+  // 🔴 CHANGE THIS VALUE: This is exactly how many milliseconds it waits after your physical mouse wheel stops ticking.
+  const snapDelayTimer = 400 
 
   useEffect(() => {
     const row = rowRef.current
@@ -232,6 +234,17 @@ function App() {
       return undefined
     }
 
+    // Initialize scroll position exactly in the middle set
+    setTimeout(() => {
+      const middleStartIndex = PicassoCard.length
+      const startCard = cardRefs.current[middleStartIndex]
+      
+      if (startCard) {
+        row.scrollLeft = startCard.offsetLeft - row.clientWidth / 2 + startCard.offsetWidth / 2
+        targetScrollLeftRef.current = row.scrollLeft
+      }
+    }, 50)
+
     const cancelWheelAnimation = () => {
       if (wheelAnimationFrameRef.current) {
         window.cancelAnimationFrame(wheelAnimationFrameRef.current)
@@ -239,19 +252,74 @@ function App() {
       }
     }
 
-const updateScrollState = () => {
+    const animateWheelScroll = () => {
+      const maxScrollLeft = row.scrollWidth - row.clientWidth
+      const targetScrollLeft = Math.max(0, Math.min(targetScrollLeftRef.current, maxScrollLeft))
+      const currentScrollLeft = row.scrollLeft
+      const distance = targetScrollLeft - currentScrollLeft
+
+      if (Math.abs(distance) < 0.5) {
+        row.scrollLeft = targetScrollLeft
+        wheelAnimationFrameRef.current = null
+        return
+      }
+
+      row.scrollLeft = currentScrollLeft + distance * 0.08
+      wheelAnimationFrameRef.current = window.requestAnimationFrame(animateWheelScroll)
+    }
+
+    // Helper to calculate closest card and execute the snap
+    const snapToClosestCard = () => {
+      if (!rowRef.current) return
+      const currentRow = rowRef.current
+      const rowRect = currentRow.getBoundingClientRect()
+      const viewportCenter = rowRect.left + rowRect.width / 2
+
+      let closestFruit = null
+      let closestDistance = Infinity
+
+      // Find the closest card mathematically right now
+      allCards.forEach((cardItem, index) => {
+        const cardNode = cardRefs.current[index]
+        if (!cardNode) return
+        const rect = cardNode.getBoundingClientRect()
+        const center = rect.left + rect.width / 2
+        const distance = Math.abs(center - viewportCenter)
+
+        if (distance < closestDistance) {
+          closestDistance = distance
+          closestFruit = index
+        }
+      })
+
+      if (closestFruit !== null) {
+        let targetCard = cardRefs.current[closestFruit]
+        let targetCenter = targetCard ? targetCard.getBoundingClientRect().left + targetCard.getBoundingClientRect().width / 2 : 0
+        const distanceToCenter = targetCenter - viewportCenter
+        
+        // Only trigger animation if it actually needs to snap
+        if (Math.abs(distanceToCenter) > 1) {
+          const maxScrollLeft = currentRow.scrollWidth - currentRow.clientWidth
+          targetScrollLeftRef.current = Math.max(0, Math.min(currentRow.scrollLeft + distanceToCenter, maxScrollLeft))
+          
+          if (!wheelAnimationFrameRef.current) {
+            wheelAnimationFrameRef.current = window.requestAnimationFrame(animateWheelScroll)
+          }
+        }
+      }
+    }
+
+    const updateScrollState = () => {
       const rowRect = row.getBoundingClientRect()
       const viewportCenter = rowRect.left + rowRect.width / 2
-      const isAtStart = row.scrollLeft <= 8
-      const isAtEnd = row.scrollLeft >= row.scrollWidth - row.clientWidth - 8
       
-      const cardStates = PicassoCard
+      const cardStates = allCards
         .map((cardItem, index) => {
           const cardNode = cardRefs.current[index]
           if (!cardNode) return null
           const rect = cardNode.getBoundingClientRect()
           return {
-            id: index,
+            id: index, 
             name: cardItem.name,
             year: cardItem.year,
             center: rect.left + rect.width / 2,
@@ -259,26 +327,6 @@ const updateScrollState = () => {
           }
         })
         .filter(Boolean)
-
-      if (startSpacerRef.current) {
-        const rect = startSpacerRef.current.getBoundingClientRect()
-        cardStates.push({
-          id: 'start-spacer',
-          year: timelineMinYear,
-          center: rect.right, 
-          distance: Math.abs(rect.right - viewportCenter),
-        })
-      }
-
-      if (endSpacerRef.current) {
-        const rect = endSpacerRef.current.getBoundingClientRect()
-        cardStates.push({
-          id: 'end-spacer',
-          year: timelineMaxYear,
-          center: rect.left, 
-          distance: Math.abs(rect.left - viewportCenter),
-        })
-      }
 
       let closestFruit = null
       let closestDistance = Infinity
@@ -290,14 +338,6 @@ const updateScrollState = () => {
           closestFruit = cardState.id
         }
       })
-
-      if (isAtStart) {
-        closestFruit = 'start-spacer'
-      }
-
-      if (isAtEnd) {
-        closestFruit = 'end-spacer'
-      }
 
       if (cardStates.length > 0) {
         const sortedCards = [...cardStates].sort((leftCard, rightCard) => leftCard.center - rightCard.center)
@@ -313,102 +353,104 @@ const updateScrollState = () => {
 
             if (viewportCenter >= leftCard.center && viewportCenter <= rightCard.center) {
               const span = Math.max(1, rightCard.center - leftCard.center)
-              // Clamping ratio between 0 and 1 prevents NaN breaks during fast scrolls
               const ratio = Math.max(0, Math.min((viewportCenter - leftCard.center) / span, 1))
-              currentYear = leftCard.year + (rightCard.year - leftCard.year) * ratio
+              
+              if (leftCard.year > rightCard.year) {
+                const gapYears = (timelineMaxYear - leftCard.year) + (rightCard.year - timelineMinYear)
+                let simYear = leftCard.year + gapYears * ratio
+                if (simYear > timelineMaxYear) {
+                  simYear = timelineMinYear + (simYear - timelineMaxYear)
+                }
+                currentYear = simYear
+              } else {
+                currentYear = leftCard.year + (rightCard.year - leftCard.year) * ratio
+              }
               break
             }
           }
         }
       }
 
-      // Safe fallback guarantees the CSS variable never receives 'NaN%'
       const safeProgress = getLinearPosition(currentYear) || 0
       setScrollProgress(safeProgress)
 
       if (closestFruit !== null) {
         setScrolledFruit(closestFruit)
-        
-        if (scrollTimeoutRef.current) {
-          clearTimeout(scrollTimeoutRef.current)
-        }
-        
-        scrollTimeoutRef.current = setTimeout(() => {
-          let targetCard = null
-          let targetCenter = 0
-          
-          if (closestFruit === 'start-spacer') {
-            targetCard = startSpacerRef.current
-            targetCenter = targetCard ? targetCard.getBoundingClientRect().right : 0
-          } else if (closestFruit === 'end-spacer') {
-            targetCard = endSpacerRef.current
-            targetCenter = targetCard ? targetCard.getBoundingClientRect().left : 0
-          } else {
-            targetCard = cardRefs.current[closestFruit]
-            targetCenter = targetCard ? targetCard.getBoundingClientRect().left + targetCard.getBoundingClientRect().width / 2 : 0
-          }
-
-          if (targetCard && row) {
-            const rowRect = row.getBoundingClientRect()
-            const currentViewportCenter = rowRect.left + rowRect.width / 2
-            const distanceToCenter = targetCenter - currentViewportCenter
-            
-            const maxScroll = row.scrollWidth - row.clientWidth
-            targetScrollLeftRef.current = Math.max(0, Math.min(row.scrollLeft + distanceToCenter, maxScroll))
-            
-            if (!wheelAnimationFrameRef.current) {
-              wheelAnimationFrameRef.current = window.requestAnimationFrame(animateWheelScroll)
-            }
-          }
-        }, scrollAnimationTimer) 
       }
-    }
-
-    const animateWheelScroll = () => {
-      const maxScrollLeft = row.scrollWidth - row.clientWidth
-      const targetScrollLeft = Math.max(
-        0,
-        Math.min(targetScrollLeftRef.current, maxScrollLeft),
-      )
-      const currentScrollLeft = row.scrollLeft
-      const distance = targetScrollLeft - currentScrollLeft
-
-      if (Math.abs(distance) < 0.5) {
-        row.scrollLeft = targetScrollLeft
-        wheelAnimationFrameRef.current = null
-        return
-      }
-
-      row.scrollLeft = currentScrollLeft + distance * 0.08
-      wheelAnimationFrameRef.current = window.requestAnimationFrame(animateWheelScroll)
+      
+      // ✅ Removed the problematic setTimeout logic from here!
     }
 
     const handleScroll = () => {
+      if (cardRefs.current[0] && cardRefs.current[PicassoCard.length]) {
+        const setWidth = cardRefs.current[PicassoCard.length].offsetLeft - cardRefs.current[0].offsetLeft;
+        
+        if (row.scrollLeft >= setWidth * 2 - row.clientWidth / 2) {
+          const originalBehavior = row.style.scrollBehavior;
+          row.style.scrollBehavior = 'auto';
+          row.scrollLeft -= setWidth;
+          targetScrollLeftRef.current -= setWidth;
+          
+          updateScrollState();
+          
+          row.style.scrollBehavior = originalBehavior;
+          return; 
+        }
+        
+        if (row.scrollLeft <= setWidth / 2) {
+          const originalBehavior = row.style.scrollBehavior;
+          row.style.scrollBehavior = 'auto';
+          row.scrollLeft += setWidth;
+          targetScrollLeftRef.current += setWidth;
+          
+          updateScrollState();
+          
+          row.style.scrollBehavior = originalBehavior;
+          return; 
+        }
+      }
+
       updateScrollState()
+
+      // If the user scrolls natively (like dragging a scrollbar), we still want to snap.
+      // But we ONLY set the timer here if the custom mousewheel animation isn't currently running.
+      if (!wheelAnimationFrameRef.current) {
+        if (scrollTimeoutRef.current) {
+          clearTimeout(scrollTimeoutRef.current)
+        }
+        scrollTimeoutRef.current = setTimeout(snapToClosestCard, snapDelayTimer)
+      }
+    }
+
+    const handleMouseDown = (event) => {
+      if (event.button === 1) { 
+        event.preventDefault(); 
+      }
     }
 
     const handleWheel = (event) => {
+      if (Math.abs(event.deltaX) > Math.abs(event.deltaY)) {
+        return; 
+      }
+
       event.preventDefault()
 
-      const horizontalDelta =
-        Math.abs(event.deltaX) > Math.abs(event.deltaY) ? event.deltaX : event.deltaY
-      const direction = horizontalDelta === 0 ? 0 : Math.sign(horizontalDelta)
-      const arrowStep = 120
-
+      const scrollVelocity = -event.deltaY * 1.5;
       const maxScrollLeft = row.scrollWidth - row.clientWidth
       targetScrollLeftRef.current = Math.max(
         0,
-        Math.min(targetScrollLeftRef.current + direction * arrowStep, maxScrollLeft),
+        Math.min(targetScrollLeftRef.current + scrollVelocity, maxScrollLeft),
       )
-
-      if (scrollTimeoutRef.current) {
-        clearTimeout(scrollTimeoutRef.current)
-        scrollTimeoutRef.current = null
-      }
 
       if (!wheelAnimationFrameRef.current) {
         wheelAnimationFrameRef.current = window.requestAnimationFrame(animateWheelScroll)
       }
+
+      // ✅ THE FIX: The timer now starts counting down exactly when the physical wheel stops ticking!
+      if (scrollTimeoutRef.current) {
+        clearTimeout(scrollTimeoutRef.current)
+      }
+      scrollTimeoutRef.current = setTimeout(snapToClosestCard, snapDelayTimer)
     }
 
     updateScrollState()
@@ -416,20 +458,20 @@ const updateScrollState = () => {
 
     row.addEventListener('scroll', handleScroll)
     window.addEventListener('wheel', handleWheel, { passive: false })
+    window.addEventListener('mousedown', handleMouseDown)
 
     return () => {
       cancelWheelAnimation()
+      if (scrollTimeoutRef.current) clearTimeout(scrollTimeoutRef.current)
       row.removeEventListener('scroll', handleScroll)
       window.removeEventListener('wheel', handleWheel)
-      window.removeEventListener('wheelclick', handleWheel)
+      window.removeEventListener('mousedown', handleMouseDown)
     }
     
   }, [])
 
-  const activeFruitIndex = 
-    scrolledFruit === 'start-spacer' ? 0 : 
-    scrolledFruit === 'end-spacer' ? PicassoCard.length - 1 : 
-    (typeof scrolledFruit === 'number' ? scrolledFruit : -1)
+  const activeFruitIndex = typeof scrolledFruit === 'number' ? scrolledFruit : -1
+  const N = PicassoCard.length 
 
   return (
     <div className="Picasso-timeline-container">
@@ -442,13 +484,12 @@ const updateScrollState = () => {
           
           {timelineYears.map((point, index) => {
             const isDuplicate = index > 0 && timelineYears[index - 1].year === point.year;
-            
             if (isDuplicate) return null;
-            const activeCard = typeof scrolledFruit === 'number' ? PicassoCard[scrolledFruit] : null;
-            const isActiveYear = activeCard && activeCard.year === point.year;
-            const isPointActive = isActiveYear || 
-              (scrolledFruit === 'start-spacer' && index === 0) || 
-              (scrolledFruit === 'end-spacer' && index === timelineYears.length - 1)
+            
+            const normalizedActiveIndex = activeFruitIndex % PicassoCard.length;
+            const activeCard = activeFruitIndex !== -1 ? PicassoCard[normalizedActiveIndex] : null;
+            const isPointActive = activeCard && activeCard.year === point.year;
+            
             return (
               <div
                 key={point.id}
@@ -498,72 +539,80 @@ const updateScrollState = () => {
       <div className="fruit-row" ref={rowRef}>
         <div className="fruit-track">
           
-          <div 
-            ref={startSpacerRef} 
-            style={{ width: '50vw', minWidth: '150px', flex: '0 0 auto', pointerEvents: 'none' }} 
-            aria-hidden="true" 
-          />
+          {allCards.map((card, index) => {
+            let distanceFromFocus = 0;
+            if (activeFruitIndex === -1) {
+              distanceFromFocus = index;
+            } else {
+              const dist1 = Math.abs(index - (activeFruitIndex - N));
+              const dist2 = Math.abs(index - activeFruitIndex);
+              const dist3 = Math.abs(index - (activeFruitIndex + N));
+              distanceFromFocus = Math.min(dist1, dist2, dist3);
+            }
 
-          {PicassoCard.map((card, index) => {
-            const distanceFromFocus = activeFruitIndex === -1 ? index : Math.abs(index - activeFruitIndex)
-            const centerCard = activeFruitIndex !== -1 ? PicassoCard[activeFruitIndex] : null;
-            const isCenterDivider = centerCard && centerCard.name && centerCard.name.startsWith('Divider');
+            const isActive = activeFruitIndex !== -1 && (
+              index === activeFruitIndex ||
+              index === activeFruitIndex - N ||
+              index === activeFruitIndex + N
+            );
 
+            const isCenterDivider = activeFruitIndex !== -1 && allCards[activeFruitIndex] && allCards[activeFruitIndex].name.startsWith('Divider')
             const neighborScale = isCenterDivider ? 0.45 : 0.65;
             const cardScale = distanceFromFocus === 0 ? 1.10 : distanceFromFocus === 1 ? neighborScale : 0.45;
             const cardOpacity = distanceFromFocus === 0 ? 1 : distanceFromFocus === 1 ? 0.68 : 0.42
+            
             const hasImage = Boolean(card.image)
             const cardBackgroundColor = card.color || '#ffffff' 
             const isDivider = card.name.startsWith('Divider')
+            const isLoopBoundary = (index + 1) % PicassoCard.length === 0 && index !== allCards.length - 1
 
             return (
-              <div
-                key={`${card.year}-${index}`}
-                ref={(el) => {
-                  cardRefs.current[index] = el
-                }}
-                className={`fruit-card ${scrolledFruit === index || (scrolledFruit === 'start-spacer' && index === 0) || (scrolledFruit === 'end-spacer' && index === PicassoCard.length - 1) ? 'active' : ''} ${hasImage ? '' : 'fruit-card--text-only'} ${isDivider ? 'fruit-card--divider' : ''}`}
-                style={{
-                  '--card-scale': cardScale,
-                  '--card-opacity': cardOpacity
-                }}
-              >
-                {isDivider ? (
-                  <div className="fruit-divider-box">
-                    <h2 className="fruit-divider-text">
-                      {card.description}
-                    </h2>
-                  </div>
-                ) : (
-                  <div className="fruit-card-inner" style={{ backgroundColor: cardBackgroundColor }}>
-                    {hasImage ? (
-                      <div className="fruit-card-image-wrap">
-                        <img className="fruit-card-image" src={card.image} alt={card.name} />
-                        {card.imageCredit && (
-                          <p className="fruit-image-credit">{card.imageCredit}</p>
+              <React.Fragment key={`fragment-${card.year}-${index}`}>
+                <div
+                  ref={(el) => {
+                    cardRefs.current[index] = el
+                  }}
+                  className={`fruit-card ${isActive ? 'active' : ''} ${hasImage ? '' : 'fruit-card--text-only'} ${isDivider ? 'fruit-card--divider' : ''}`}
+                  style={{
+                    '--card-scale': cardScale,
+                    '--card-opacity': cardOpacity
+                  }}
+                >
+                  {isDivider ? (
+                    <div className="fruit-divider-box">
+                      <h2 className="fruit-divider-text">
+                        {card.description}
+                      </h2>
+                    </div>
+                  ) : (
+                    <div className="fruit-card-inner" style={{ backgroundColor: cardBackgroundColor }}>
+                      {hasImage ? (
+                        <div className="fruit-card-image-wrap">
+                          <img className="fruit-card-image" src={card.image} alt={card.name} />
+                          {card.imageCredit && (
+                            <p className="fruit-image-credit">{card.imageCredit}</p>
+                          )}
+                        </div>
+                      ) : null}
+                      <div className="fruit-card-copy">
+                        <p className="fruit-name">{card.name}</p>
+                        <p className="fruit-description">{card.description}</p>
+                        {card.credit && (
+                          <p className="fruit-credit">
+                            {card.credit}
+                          </p>
                         )}
                       </div>
-                    ) : null}
-                    <div className="fruit-card-copy">
-                      <p className="fruit-name">{card.name}</p>
-                      <p className="fruit-description">{card.description}</p>
-                      {card.credit && (
-                        <p className="fruit-credit">
-                          {card.credit}
-                        </p>
-                      )}
                     </div>
-                  </div>
+                  )}
+                </div>
+                
+                {isLoopBoundary && (
+                  <div style={{ width: '15vw', flexShrink: 0, pointerEvents: 'none' }} aria-hidden="true" />
                 )}
-              </div>
+              </React.Fragment>
             )
           })}
-
-          <div 
-            ref={endSpacerRef} 
-            style={{ width: '50vw', minWidth: '150px', flex: '0 0 auto', pointerEvents: 'none' }} 
-            aria-hidden="true" 
-          />
           
         </div>
       </div>
