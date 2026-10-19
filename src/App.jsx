@@ -11,61 +11,61 @@ const PicassoCard = [
   {
     name: '1899',
     year: 1899,
-    description: 'Creates his first etching, titled El Zurdo (The Left-Handed Man). ',
+    description: <>Creates his first etching, titled <i>El Zurdo (The Left-Handed Man)</i>.</>,
     color: '#f3e9e3', 
   },
   {
     name: '1900',
     year: 1900,
-    description: "Travels to Paris for the first time. He meets the ceramist Paco Durio, who introduced him to Gauguin's ceramics. ",
+    description: <>Travels to Paris for the first time. He meets the ceramist Paco Durio, who introduced him to Gauguin's ceramics.</>,
     color: '#f3e9e3', 
   },
   {
     name: '1901',
     image: 'PicassoImage/1901GeneralKeyWork.png',
     year: 1901,
-    description: "Enters his Blue Period. For three years, he creates largely monochromatic blue paintings of somber subject matter. Followed by his Rose period in 1904. ",
-    credit: <>Pablo Picasso (Spanish, 1881–1973), <i>Seated Harlequin</i>, 1901 © 2026 Estate of Pablo Picasso / Artists Rights Society (ARS), New York</>,
+    description: <>Enters his Blue Period. For three years, he creates largely monochromatic blue paintings of somber subject matter. Followed by his Rose period in 1904.</>,
+    credit: <>Pablo Picasso (Spanish, 1881–1973), <i>Seated Harlequin</i>, 1901 © 2026 Estate of Pablo Picasso / Artists Rights Society (ARS), New York; Digital Image © The Metropolitan Museum of Art. Image source: Art Resource, NY</>,
     color: '#f3e9e3', 
   },
   {
     name: '1907',
     image: 'PicassoImage/1907GeneralKeyWork.png',
     year: 1907,
-    description: "Begins to incorporate elements of global ethnographic art into paintings such as Les Demoiselles d’Avignon (The Young Ladies of Avignon). ",
-    credit: <>Pablo Picasso (Spanish, 1881–1973), <i>Les Demoiselles d’Avignon (The Young Ladies of Avignon)</i>, 1907 © 2026 Estate of Pablo Picasso / Artists Rights Society (ARS), New York</>,
+    description: <>Begins to incorporate elements of global ethnographic art into paintings such as <i>Les Demoiselles d’Avignon</i> (The Young Ladies of Avignon).</>,
+    credit: <>Pablo Picasso (Spanish, 1881–1973), <i>Les Demoiselles d'Avignon (<i>The Young Ladies of Avignon</i>)</i>, 1907 © 2026 Estate of Pablo Picasso / Artists Rights Society (ARS), New York; Digital Image © The Museum of Modern Art / Licensed by SCALA / Art Resource, NY</>,
      color: '#f3e9e3', 
   },
   {
     name: 'Divider 1909',
     year: 1909,
-    description: '1909: Inception of Cubism ',
+    description: '1909 \u2003 Inception of Cubism ',
     color: '#f3e9e3',
   },
   {
     name: 'Divider 1914',
     year: 1914,
-    description: '1914: World War I Begins',
+    description: '1914 \u2003 World War I Begins',
     color: '#f3e9e3', 
   },
   {
     name: '1918 ',
     image: 'PicassoImage/ART564772_Updated.jpg',
     year: 1918,
-    description: "Following le rappel à l’ordre (the return to order) in Europe, adopts Neoclassicism and blends the style with Cubism. ",
-    credit: <>Pablo Picasso (Spanish, 1881–1973), <i>La Flûte de Pan (The Pipes of Pan)</i>, 1923 © 2026 Estate of Pablo Picasso / Artists Rights Society (ARS), New York</>,
+    description: <>Following <i>le rappel à l’ordre</i> (the return to order) in Europe, adopts Neoclassicism and blends the style with Cubism. </>,
+    credit: <>Pablo Picasso (Spanish, 1881–1973), <i>La Flûte de Pan (The Pipes of Pan)</i>, 1923 © 2026 Estate of Pablo Picasso / Artists Rights Society (ARS), New York; Digital Image © RMN-Grand Palais / Art Resource, NY</>,
     color: '#f3e9e3',
   },
   {
     name: '1921',
     year: 1921,
-    description: "Meets the Spanish ceramicist Josep Llorens i Artigas. Their attempts to collaborate end in frustration. ",
+    description: <>Meets the Spanish ceramicist Josep Llorens i Artigas. Their attempts to collaborate end in frustration.</>,
     color: '#f3e9e3', 
   },
   {
     name: 'Divider 1925',
     year: 1925,
-    description: "1925: Inception of Surrealism ",
+    description: "1925 \u2003 Inception of Surrealism ",
     color: '#f3e9e3',
   },
   {
@@ -73,13 +73,13 @@ const PicassoCard = [
     image: 'PicassoImage/1929Ceramic.jpg',
     year: 1929,
     description: "Paints two ceramic vases with the assistance of Dutch artist Jean van Dongen. ",
-    credit: <>Pablo Picasso (Spanish, 1881–1973) and Jean van Dongen (Dutch, 1883–1970), <i>Vase décoré de baigneuses (Vase with Bathers)</i>, 1929 © 2026 Estate of Pablo Picasso / Artists Rights Society (ARS), New York</>,
+    credit: <>Pablo Picasso (Spanish, 1881–1973) and Jean van Dongen (Dutch, 1883–1970),<i> Vase décoré de baigneuses (Vase with Bathers)</i>, 1929 © 2026 Estate of Pablo Picasso / Artists Rights Society (ARS), New York; Digital Image © RMN-Grand Palais / Art Resource, NY”</>,
     color: '#f3e9e3',
   },
   {
     name: 'Divider 1936',
     year: 1936,
-    description: "1936: Spanish Civil War Begins",
+    description: "1936 \u2003 Spanish Civil War Begins",
     color: '#f3e9e3', 
   },
   {
@@ -91,21 +91,22 @@ const PicassoCard = [
   {
     name: '1937',
     image: 'PicassoImage/Guernica.jpeg',
+    imageCredit: <>Reina Sofía National Art Centre Museum</>,
     year: 1937,
-    description: "Paints Guernica for the Spanish pavilion at the Exposition Internationale des Arts et Techniques dans la Vie Moderne (International Exposition of Art and Technology in Modern Life) in Paris. ",
-    credit: <>Pablo Picasso (Spanish, 1881–1973), <i>Guernica</i>, 1937 © 2026 Estate of Pablo Picasso / Artists Rights Society (ARS), New York</>,
+    description: <>Paints <i>Guernica</i> for the Spanish pavilion at the Exposition Internationale des Arts et Techniques dans la Vie Moderne (International Exposition of Art and Technology in Modern Life) in Paris. </>,
+    credit: <>Pablo Picasso (Spanish, 1881–1973), <i>Guernica</i>, 1937 © 2026 Estate of Pablo Picasso / Artists Rights Society (ARS), New York; Digital Image © Reina Sofía National Art Centre Museum Photo Archive</>,
     color: '#f3e9e3', 
   },
   {
     name: 'Divider 1939',
     year: 1939,
-    description: "1939: World War II Begins",
+    description: "1939 \u2003 World War II Begins",
     color: '#f3e9e3',
   },
   {
     name: '1945',
     year: 1945,
-    description: "Creates Le Taureau, a series of eleven lithographs depicting a bull, at Fernand Mourlot’s print shop in Rue de Chabrol. ",
+    description: <>Creates <i>Le Taureau</i>, a series of eleven lithographs depicting a bull, at Fernand Mourlot’s print shop in Rue de Chabrol. </>,
     color: '#f3e9e3', 
   },
   {
@@ -132,21 +133,20 @@ const PicassoCard = [
     name: '1949',
     image: 'PicassoImage/AR_Blue_Plate.jpg',
     year: 1949,
-    description: "Picasso suggests to the Ramiés that they produce prints of his ceramics, leading to the first edition, Four Enlaced Profiles. ",
+    description: <>Picasso suggests to the Ramiés that they produce prints of his ceramics, leading to the first edition, <i>Four Enlaced Profiles</i>. </>,
     credit: <>Pablo Picasso (Spanish, 1881–1973), <i>Four Enlaced Profiles</i>, 1949 © 2026 Estate of Pablo Picasso / Artists Rights Society (ARS), New York</>,
     color: '#f3e9e3', 
   },
   {
     name: '1950',
     year: 1950,
-    description: "Experiments with assemblage plaster sculptures using ceramic vessels and fragments, including La chèvre (The Goat) and La guenon et son petit (Baboon and Young).",
+    description: <>Experiments with assemblage plaster sculptures using ceramic vessels and fragments, including <i>La chèvre (The Goat)</i> and <i>La guenon et son petit (Baboon and Young)</i>. <br /><br /> Drawing inspiration from ancient Mediterranean, Greek, and Roman pottery traditions, reimagines historic vessel forms through a modern visual language.</>,
     color: '#f3e9e3',
   },
   {
     name: '1957',
     year: 1957,
-    description: "Paints Las Meninas, a series of 58 paintings interpreting Diego Velazquez’s Las Meninas. ",
-    credit: <>Pablo Picasso (Spanish, 1881–1973), <i>Las Meninas</i>, 1957 © 2026 Estate of Pablo Picasso / Artists Rights Society (ARS), New York</>,
+    description: <>Paints <i>Las Meninas</i>, a series of 58 paintings interpreting Diego Velazquez’s <i>Las Meninas</i>. </>,
     color: '#f3e9e3',
   },
   {
@@ -200,50 +200,14 @@ const timelineMinYear = 1880
 const timelineMaxYear = 1980
 const timelineYearRange = timelineMaxYear - timelineMinYear
 
-const timelineSpreadValues = timelineYears.map((point, index) => {
-  const normalizedYear = ((point.year - timelineMinYear) / timelineYearRange) * 100
-  return normalizedYear + index * 2.5
-})
-
-const leftAnchorSpread = 0
-const rightAnchorSpread = 100 + ((timelineYears.length > 0 ? timelineYears.length - 1 : 0) * 2.5)
-const timelineSpreadMax = rightAnchorSpread
+const getLinearPosition = (year) => {
+  const percentage = ((year - timelineMinYear) / timelineYearRange) * 100
+  return Math.max(0, Math.min(percentage, 100))
+}
 
 const uniqueRulerMarkers = []
 for (let y = timelineMinYear; y <= timelineMaxYear; y += 10) {
   uniqueRulerMarkers.push(y)
-}
-
-const getInterpolatedTickPosition = (targetYear) => {
-  if (targetYear <= timelineMinYear) return 0
-  if (targetYear >= timelineMaxYear) return 100
-
-  const rightIndex = timelineYears.findIndex((p) => p.year >= targetYear)
-  
-  let leftPoint, rightPoint, leftPos, rightPos
-
-  if (rightIndex === -1) {
-    leftPoint = timelineYears[timelineYears.length - 1]
-    rightPoint = { year: timelineMaxYear }
-    leftPos = timelineSpreadValues[timelineSpreadValues.length - 1]
-    rightPos = rightAnchorSpread
-  } else if (rightIndex === 0) {
-    leftPoint = { year: timelineMinYear }
-    rightPoint = timelineYears[0]
-    leftPos = leftAnchorSpread
-    rightPos = timelineSpreadValues[0]
-  } else {
-    leftPoint = timelineYears[rightIndex - 1]
-    rightPoint = timelineYears[rightIndex]
-    leftPos = timelineSpreadValues[rightIndex - 1]
-    rightPos = timelineSpreadValues[rightIndex]
-  }
-
-  const yearSpan = rightPoint.year - leftPoint.year
-  const ratio = yearSpan === 0 ? 0 : (targetYear - leftPoint.year) / yearSpan
-  const interpolatedPos = leftPos + (rightPos - leftPos) * ratio
-
-  return (interpolatedPos / timelineSpreadMax) * 100
 }
 
 function App() {
@@ -275,7 +239,7 @@ function App() {
       }
     }
 
-    const updateScrollState = () => {
+const updateScrollState = () => {
       const rowRect = row.getBoundingClientRect()
       const viewportCenter = rowRect.left + rowRect.width / 2
       const isAtStart = row.scrollLeft <= 8
@@ -301,7 +265,7 @@ function App() {
         cardStates.push({
           id: 'start-spacer',
           year: timelineMinYear,
-          center: rect.right, // ANCHOR TO RIGHT EDGE OF SPACER
+          center: rect.right, 
           distance: Math.abs(rect.right - viewportCenter),
         })
       }
@@ -311,7 +275,7 @@ function App() {
         cardStates.push({
           id: 'end-spacer',
           year: timelineMaxYear,
-          center: rect.left, // ANCHOR TO LEFT EDGE OF SPACER
+          center: rect.left, 
           distance: Math.abs(rect.left - viewportCenter),
         })
       }
@@ -349,13 +313,18 @@ function App() {
 
             if (viewportCenter >= leftCard.center && viewportCenter <= rightCard.center) {
               const span = Math.max(1, rightCard.center - leftCard.center)
-              const ratio = (viewportCenter - leftCard.center) / span
+              // Clamping ratio between 0 and 1 prevents NaN breaks during fast scrolls
+              const ratio = Math.max(0, Math.min((viewportCenter - leftCard.center) / span, 1))
               currentYear = leftCard.year + (rightCard.year - leftCard.year) * ratio
               break
             }
           }
         }
       }
+
+      // Safe fallback guarantees the CSS variable never receives 'NaN%'
+      const safeProgress = getLinearPosition(currentYear) || 0
+      setScrollProgress(safeProgress)
 
       if (closestFruit !== null) {
         setScrolledFruit(closestFruit)
@@ -393,8 +362,6 @@ function App() {
           }
         }, scrollAnimationTimer) 
       }
-
-      setScrollProgress(getInterpolatedTickPosition(currentYear))
     }
 
     const animateWheelScroll = () => {
@@ -459,7 +426,6 @@ function App() {
     
   }, [])
 
-  // Lock focus to 1881 when scrolling far left, and 1973 when scrolling far right
   const activeFruitIndex = 
     scrolledFruit === 'start-spacer' ? 0 : 
     scrolledFruit === 'end-spacer' ? PicassoCard.length - 1 : 
@@ -468,24 +434,27 @@ function App() {
   return (
     <div className="Picasso-timeline-container">
       <h1>TIMELINE OF PICASSO’S LIFE</h1>
-      <p className="scroll-hint">Move left and right to go through the timeline</p>
+      <p className="scroll-hint">Spin the potter’s wheel to navigate the timeline</p>
       <div className="timeline-shell" aria-hidden="true" style={{ '--timeline-progress': `${scrollProgress}%` }}>
         <div className="timeline-track">
           <div className="timeline-line" />
           <div className="timeline-progress" />
           
           {timelineYears.map((point, index) => {
-            // Keep the timeline marker dot glowing when the user scrolls into the void
-            const isPointActive = scrolledFruit === point.id || 
+            const isDuplicate = index > 0 && timelineYears[index - 1].year === point.year;
+            
+            if (isDuplicate) return null;
+            const activeCard = typeof scrolledFruit === 'number' ? PicassoCard[scrolledFruit] : null;
+            const isActiveYear = activeCard && activeCard.year === point.year;
+            const isPointActive = isActiveYear || 
               (scrolledFruit === 'start-spacer' && index === 0) || 
               (scrolledFruit === 'end-spacer' && index === timelineYears.length - 1)
-
             return (
               <div
                 key={point.id}
                 className={`timeline-stop ${isPointActive ? 'active' : ''}`}
                 style={{
-                  '--timeline-position': `${(timelineSpreadValues[index] / timelineSpreadMax) * 100}%`,
+                  '--timeline-position': `${getLinearPosition(point.year)}%`,
                 }}
               >
                 <p 
@@ -493,7 +462,6 @@ function App() {
                   style={{ 
                     position: 'absolute', 
                     top: '-25px',
-                    //transform: 'translateX(-50%)', 
                     margin: 0,
                     whiteSpace: 'nowrap'
                   }}
@@ -511,7 +479,7 @@ function App() {
               className="timeline-ruler-tick"
               style={{
                 position: 'absolute',
-                left: `${getInterpolatedTickPosition(year)}%`,
+                left: `${getLinearPosition(year)}%`,
                 top: '14px',
                 transform: 'translateX(-50%)',
                 display: 'flex',
@@ -538,52 +506,57 @@ function App() {
 
           {PicassoCard.map((card, index) => {
             const distanceFromFocus = activeFruitIndex === -1 ? index : Math.abs(index - activeFruitIndex)
-            const cardScale =
-              distanceFromFocus === 0 ? 1.10 : distanceFromFocus === 1 ? 0.65 : 0.45
-            const cardOpacity =
-              distanceFromFocus === 0 ? 1 : distanceFromFocus === 1 ? 0.68 : 0.42
+            const centerCard = activeFruitIndex !== -1 ? PicassoCard[activeFruitIndex] : null;
+            const isCenterDivider = centerCard && centerCard.name && centerCard.name.startsWith('Divider');
+
+            const neighborScale = isCenterDivider ? 0.45 : 0.65;
+            const cardScale = distanceFromFocus === 0 ? 1.10 : distanceFromFocus === 1 ? neighborScale : 0.45;
+            const cardOpacity = distanceFromFocus === 0 ? 1 : distanceFromFocus === 1 ? 0.68 : 0.42
             const hasImage = Boolean(card.image)
             const cardBackgroundColor = card.color || '#ffffff' 
-            
             const isDivider = card.name.startsWith('Divider')
 
-return (
-  <div
-    key={`${card.year}-${index}`}
-    ref={(el) => {
-      cardRefs.current[index] = el
-    }}
-    // Added 'is-divider' conditionally to the class string
-    className={`fruit-card ${scrolledFruit === index ? 'active' : ''} ${hasImage ? '' : 'fruit-card--text-only'} ${isDivider ? 'is-divider' : ''}`}
-    style={{
-      '--card-scale': cardScale,
-      '--card-opacity': cardOpacity
-    }}
-  >
-    {isDivider ? (
-      <div className="fruit-divider-box">
-        <h2 className="fruit-divider-text">
-          {card.description}
-        </h2>
-      </div>
-    ) : (
-      <div className="fruit-card-inner" style={{ backgroundColor: cardBackgroundColor }}>
-        {hasImage ? (
-          <img className="fruit-card-image" src={card.image} alt={card.name} />
-        ) : null}
-        <div className="fruit-card-copy">
-          <p className="fruit-name">{card.name}</p>
-          <p className="fruit-description">{card.description}</p>
-          {card.credit && (
-            <p className="fruit-credit">
-              {card.credit}
-            </p>
-          )}
-        </div>
-      </div>
-    )}
-  </div>
-)
+            return (
+              <div
+                key={`${card.year}-${index}`}
+                ref={(el) => {
+                  cardRefs.current[index] = el
+                }}
+                className={`fruit-card ${scrolledFruit === index || (scrolledFruit === 'start-spacer' && index === 0) || (scrolledFruit === 'end-spacer' && index === PicassoCard.length - 1) ? 'active' : ''} ${hasImage ? '' : 'fruit-card--text-only'} ${isDivider ? 'fruit-card--divider' : ''}`}
+                style={{
+                  '--card-scale': cardScale,
+                  '--card-opacity': cardOpacity
+                }}
+              >
+                {isDivider ? (
+                  <div className="fruit-divider-box">
+                    <h2 className="fruit-divider-text">
+                      {card.description}
+                    </h2>
+                  </div>
+                ) : (
+                  <div className="fruit-card-inner" style={{ backgroundColor: cardBackgroundColor }}>
+                    {hasImage ? (
+                      <div className="fruit-card-image-wrap">
+                        <img className="fruit-card-image" src={card.image} alt={card.name} />
+                        {card.imageCredit && (
+                          <p className="fruit-image-credit">{card.imageCredit}</p>
+                        )}
+                      </div>
+                    ) : null}
+                    <div className="fruit-card-copy">
+                      <p className="fruit-name">{card.name}</p>
+                      <p className="fruit-description">{card.description}</p>
+                      {card.credit && (
+                        <p className="fruit-credit">
+                          {card.credit}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                )}
+              </div>
+            )
           })}
 
           <div 

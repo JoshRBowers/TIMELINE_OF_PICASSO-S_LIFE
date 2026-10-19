@@ -6,6 +6,10 @@ html, body, #root {
   overflow-x: hidden; 
 }
 
+* {
+  cursor: none !important;
+}
+
 .fruit-container {
   margin: 100px;
   min-height: 100svh;
@@ -63,14 +67,14 @@ html, body, #root {
   flex: 1 1 auto;
   overflow-x: auto;
   overflow-y: hidden;
-  padding: 40px 0; 
+  padding: 80px 0 40px; 
   box-sizing: border-box;
   scrollbar-width: none;
 }
 
 .fruit-track {
   display: flex;
-  gap: 5px;
+  gap: 8px;
   width: max-content;
   flex: 0 0 auto;
   padding: 0 max(20px, calc(50vw - 400px));
@@ -84,7 +88,7 @@ html, body, #root {
 .timeline-track,
 .fruit-track {
   display: flex;
-  gap: 5px;
+  gap: 8px;
   width: max-content;
   flex: 0 0 auto;
 }
@@ -151,7 +155,6 @@ html, body, #root {
   border-radius: 999px;
   background: #ffffff;
   transform: translateY(-3px);
-  box-shadow: 0 0 0 6px rgba(170, 59, 255, 0.1);
 }
 
 .timeline-stop:first-of-type::before {
@@ -174,7 +177,7 @@ html, body, #root {
   width: 14px;
   height: 14px;
   border-radius: 999px;
-  box-shadow: 0 0 0 8px rgba(0, 0, 0, 0.06);
+  box-shadow: none;
   z-index: 1;
 }
 
@@ -206,7 +209,7 @@ html, body, #root {
 .timeline-stop.active .timeline-checker {
   background: var(--accent);
   border-color: var(--accent);
-  box-shadow: 0 0 0 10px rgba(239, 237, 240, 0);
+  box-shadow: none;
 }
 
 .timeline-stop.active .timeline-year {
@@ -222,17 +225,22 @@ html, body, #root {
   flex: 0 0 auto;
   position: relative;
   width: min(620px, calc(100vw - 28px));
+  min-width: min(620px, calc(100vw - 28px));
   min-height: 200px;
-  margin: 0 -30px; 
+  margin: 0 -100px !important;
+  
   cursor: default;
   outline: none;
   opacity: var(--card-opacity, 0.62);
   transform: scale(var(--card-scale, 0.82));
   transform-origin: center center;
+  
   transition:
     transform 0.32s ease,
     opacity 0.32s ease,
+    margin 0.32s ease,
     filter 0.32s ease;
+    
   filter: saturate(0.9) brightness(0.94);
   will-change: transform, opacity;
 }
@@ -240,6 +248,7 @@ html, body, #root {
 .fruit-card.active {
   opacity: 1;
   filter: saturate(1) brightness(1);
+  margin: 0 50px !important;
 }
 
 .fruit-card-inner {
@@ -254,7 +263,7 @@ html, body, #root {
   align-items: center;
   padding: 18px;
   box-sizing: border-box;
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+  box-shadow: none;
   transition:
     transform 0.3s ease,
     box-shadow 0.3s ease,
@@ -263,7 +272,7 @@ html, body, #root {
 }
 
 .fruit-card:hover .fruit-card-inner {
-  box-shadow: 0 18px 42px rgba(0, 0, 0, 0.18);
+  box-shadow: none;
   transform: translateY(-2px);
 }
 
@@ -280,17 +289,38 @@ html, body, #root {
   box-shadow: none;
 }
 
-.fruit-card--text-only .fruit-card-inner {
-  grid-template-columns: 1fr;
-  padding-left: 60px; 
-  padding-right: 60px; 
-  max-width: 450px;
-  margin: 0 auto; 
+.fruit-card-image-wrap {
+  min-width: 0;
+  text-align: center;
 }
+
+.fruit-image-credit {
+  margin: 6px 0 0;
+  color: #666;
+  font-size: 10px;
+  line-height: 1.2;
+  font-family: "skolar-sans-latin", sans-serif;
+  font-weight: 500;
+}
+
+.fruit-card.fruit-card--text-only {
+  /*width: min(620px, calc(100vw - 28px)) !important;
+  min-width: min(620px, calc(100vw - 28px));*/
+  margin: 0 -130px !important;
+}
+
+.fruit-card.fruit-card--text-only.active {
+  margin: 0 -35px !important; 
+}
+
 .fruit-card--text-only .fruit-card-inner {
   grid-template-columns: 1fr;
   padding-left: 60px; 
   padding-right: 60px; 
+  max-width: none; 
+
+  width: min(450px, 100%);
+  margin: 0 auto;
 }
 
 .fruit-card-copy {
@@ -327,25 +357,40 @@ html, body, #root {
 
 /* --- Divider Card Wrapper --- */
 /* Applied conditionally when the card is a divider */
-.fruit-card.is-divider {
+/*.fruit-card.is-divider {
   width: 350px;
   min-width: 350px;
   margin: 0 10px;
   display: flex;
   align-items: center;
-}
+}*/
 
 /* --- Divider Box inside the wrapper --- */
 .fruit-divider-box {
-  width: 100%;
+  width: min(350px, 100%) !important; 
   height: 80px;
-  min-height: 80px;
   background-color: #1a1a1a;
   border: 4px solid #000000;
   display: flex;
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
+  margin: 0 auto;
+}
+
+.fruit-card.fruit-card--divider {
+  /*width: min(620px, calc(100vw - 28px));
+  min-width: min(620px, calc(100vw - 28px));
+  */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  margin: 0 -170px !important;
+}
+
+.fruit-card.fruit-card--divider.active {
+  margin: 0 -90px !important; 
 }
 
 /* --- Text inside the divider box --- */
@@ -372,232 +417,105 @@ html, body, #root {
   font-weight: 500;
 }
 
-.counter {
-  font-size: 16px;
-  padding: 5px 10px;
-  border-radius: 5px;
-  color: var(--accent);
-  background: var(--accent-bg);
-  border: 2px solid transparent;
-  transition: border-color 0.3s;
-  margin-bottom: 24px;
-
-  &:hover {
-    border-color: var(--accent-border);
-  }
-  &:focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 2px;
-  }
-}
-
-.hero {
-  position: relative;
-
-  .base,
-  .framework,
-  .vite {
-    inset-inline: 0;
-    margin: 0 auto;
-  }
-
-  .base {
-    width: 170px;
-    position: relative;
-    z-index: 0;
-  }
-
-  .framework,
-  .vite {
-    position: absolute;
-  }
-
-  .framework {
-    z-index: 1;
-    top: 34px;
-    height: 28px;
-    transform: perspective(2000px) rotateZ(300deg) rotateX(44deg) rotateY(39deg)
-      scale(1.4);
-  }
-
-  .vite {
-    z-index: 0;
-    top: 107px;
-    height: 26px;
-    width: auto;
-    transform: perspective(2000px) rotateZ(300deg) rotateX(40deg) rotateY(39deg)
-      scale(0.8);
-  }
-}
-
-#center {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  place-content: center;
-  place-items: center;
-  flex-grow: 1;
-
-  @media (max-width: 1024px) {
-    padding: 32px 20px 24px;
-    gap: 5px;
-  }
-}
-
-#next-steps {
-  display: flex;
-  border-top: 1px solid var(--border);
-  text-align: left;
-
-  & > div {
-    flex: 1 1 0;
-    padding: 32px;
-    @media (max-width: 1024px) {
-      padding: 24px 20px;
-    }
-  }
-
-  .icon {
-    margin-bottom: 16px;
-    width: 22px;
-    height: 22px;
-  }
-
-  @media (max-width: 1024px) {
-    flex-direction: column;
-    text-align: center;
-  }
-}
-
-#docs {
-  border-right: 1px solid var(--border);
-
-  @media (max-width: 1024px) {
-    border-right: none;
-    border-bottom: 1px solid var(--border);
-  }
-}
-
-#next-steps ul {
-  list-style: none;
-  padding: 0;
-  display: flex;
-  gap: 8px;
-  margin: 32px 0 0;
-
-  .logo {
-    height: 18px;
-  }
-
-  a {
-    color: var(--text-h);
-    font-size: 16px;
-    border-radius: 6px;
-    background: var(--social-bg);
-    display: flex;
-    padding: 6px 12px;
-    align-items: center;
-    gap: 8px;
-    text-decoration: none;
-    transition: box-shadow 0.3s;
-
-    &:hover {
-      box-shadow: var(--shadow);
-    }
-    .button-icon {
-      height: 18px;
-      width: 18px;
-    }
-  }
-
-  @media (max-width: 1024px) {
-    margin-top: 20px;
-    flex-wrap: wrap;
-    justify-content: center;
-
-    li {
-      flex: 1 1 calc(50% - 8px);
-    }
-
-    a {
-      width: 100%;
-      justify-content: center;
-      box-sizing: border-box;
-    }
-  }
-}
-
-#spacer {
-  height: 88px;
-  border-top: 1px solid var(--border);
-  @media (max-width: 1024px) {
-    height: 48px;
-  }
-}
-
-.ticks {
-  position: relative;
-  width: 100%;
-
-  &::before,
-  &::after {
-    content: '';
-    position: absolute;
-    top: -4.5px;
-    border: 5px solid transparent;
-  }
-
-  &::before {
-    left: 0;
-    border-left-color: var(--border);
-  }
-  &::after {
-    right: 0;
-    border-right-color: var(--border);
-  }
-}
-
-/* --- MOBILE STYLES --- */
-@media (max-width: 640px) {
+/* --- LARGE DISPLAY / TV STYLES --- */
+@media (min-width: 1600px) and (min-height: 900px) {
   .fruit-container {
-    padding: 16px 0 20px;
+    margin: 64px;
+  }
+
+  .Picasso-timeline-container h1 {
+    margin-bottom: 36px;
+    font-size: 48px;
+  }
+
+  .scroll-hint {
+    margin-bottom: 20px;
+    font-size: 28px;
+  }
+
+  .timeline-shell {
+    margin-top: 24px;
+    padding-bottom: 28px;
+  }
+
+  .timeline-track {
+    min-height: 86px;
+    padding: 0 36px 28px;
+  }
+
+  .timeline-line,
+  .timeline-progress {
+    top: 18px;
+    height: 4px;
+  }
+
+  .timeline-checker {
+    width: 16px;
+    height: 16px;
+    border-radius: 4px;
+  }
+
+  .timeline-year {
+    margin-top: 18px;
+    font-size: 26px;
   }
 
   .fruit-row {
-    gap: 5px;
-    padding: 12px calc(50vw - 140px) 24px;
-    scroll-padding-inline: calc(50vw - 140px);
-    
+    padding-top: 10px;
+    padding-bottom: 52px;
   }
 
   .fruit-card {
-    height: 250px;
-    width: min(280px, calc(100vw - 32px));
-    font-style: normal;
-   font-family: "skolar-sans-latin", sans-serif;
-  font-weight: 500;
-
+    width: min(760px, calc(100vw - 56px));
+    min-width: min(760px, calc(100vw - 56px));
+    min-height: 300px;
   }
 
-  .fruit-card-front img {
-    width: 140px;
-    height: 140px;
+  .fruit-card-inner {
+    min-height: 276px;
+    grid-template-columns: minmax(220px, 280px) 1fr;
+    gap: 18px;
+    padding: 28px;
+    border-radius: 34px;
+  }
+
+  .fruit-card-image {
+    min-height: 220px;
+  }
+
+  .fruit-card--text-only .fruit-card-inner {
+    width: min(560px, 100%);
+    padding-left: 72px;
+    padding-right: 72px;
   }
 
   .fruit-name {
-    font-size: 18px;
-     font-style: normal;
-   font-family: "skolar-sans-latin", sans-serif;
-  font-weight: 500;
+    margin-bottom: 16px;
+    margin-left: 22px;
+    font-size: 32px;
   }
 
   .fruit-description {
-    font-size: 16px;
-     font-style: normal;
-   font-family: "skolar-sans-latin", sans-serif;
-  font-weight: 500;
+    margin-left: 24px;
+    font-size: 22px;
+    line-height: 1.5;
+    max-width: 38ch;
   }
-} 
 
+  .fruit-credit {
+    margin-top: 14px;
+    margin-left: 24px;
+    padding-top: 12px;
+    font-size: 14px;
+  }
 
+  .fruit-divider-box {
+    width: min(440px, 100%) !important;
+    height: 112px;
+    border-width: 5px;
+  }
 
+  .fruit-divider-text {
+    font-size: 30px;
+  }
+}
